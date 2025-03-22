@@ -1,0 +1,43 @@
+name: GoReleaser Command-Wrapped
+
+on:
+  push:
+    branches: [ feature/action-wrapping ]
+  workflow_dispatch:
+
+permissions:
+  contents: write # Needed for goreleaser to create releases
+  id-token: write # Needed for Sigstore/witness
+
+jobs:
+  goreleaser-command-wrapped:
+    name: GoReleaser Command Wrapped
+    runs-on: ubuntu-latest
+    steps:
+      # Regular checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      # Setup Go directly
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      
+      # Install GoReleaser first
+      - name: Install GoReleaser
+        run: go install github.com/goreleaser/goreleaser@latest
+
+      # Use witness-run-action to wrap goreleaser command (reliable approach)
+      - name: GoReleaser with Witness (Command-Wrapped)
+        uses: testifysec/witness-run-action@feature/action-wrapping
+        with:
+          step: "goreleaser"
+          command: "goreleaser release --snapshot --clean"
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github slsa"
+          witness-install-dir: "./"
+          archivista-server: "https://archivista.testifysec.io"
