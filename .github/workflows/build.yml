@@ -21,6 +21,7 @@ jobs:
         with:
           step: "checkout"
           action-ref: "actions/checkout@v4"
+          input-token: ${{ github.token }}
           enable-sigstore: true
           attestations: "environment github slsa"
       
@@ -55,6 +56,7 @@ jobs:
         with:
           step: "checkout-for-build"
           action-ref: "actions/checkout@v4"
+          input-token: ${{ github.token }}
           input-fetch-depth: 0
           enable-sigstore: true
           attestations: "environment github slsa"
