@@ -32,12 +32,12 @@ jobs:
         with:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
-          # Test boolean parameter handling
+          # Test boolean parameter handling - updated after fix
           input-version: latest
-          input-args: release --snapshot --clean
-          input-install-only: false
-          enable-sigstore: true
-          enable-archivista: true
+          input-args: "release --snapshot --clean"
+          input-install-only: "false"  # Using string format for better YAML compatibility
+          enable-sigstore: "true"
+          enable-archivista: "true"
           attestations: "environment github slsa"
           witness-install-dir: "./"
           archivista-server: "https://archivista.testifysec.io"
