@@ -35,7 +35,7 @@ jobs:
           step: "setup-go"
           action-ref: "actions/setup-go@v5"
           input-go-version: '1.22'
-          input-cache: 'true'
+          # Omit cache parameter to avoid boolean parsing issues
           enable-sigstore: true
           attestations: "environment github"
       
