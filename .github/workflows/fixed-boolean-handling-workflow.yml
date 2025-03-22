@@ -2,7 +2,7 @@ name: Fixed Boolean Handling (Action-Ref)
 
 on:
   push:
-    branches: [ fix/boolean-input-handling ]
+    branches: [ feature/action-wrapping ]
   workflow_dispatch:
 
 permissions:
