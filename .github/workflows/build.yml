@@ -32,7 +32,7 @@ jobs:
           step: "setup-go"
           action-ref: "actions/setup-go@v5"
           input-go-version: '1.22'
-          input-cache: true
+          input-cache: 'true'
           enable-sigstore: true
           attestations: "environment github"
       
@@ -68,7 +68,7 @@ jobs:
           step: "setup-go-for-build"
           action-ref: "actions/setup-go@v5"
           input-go-version: '1.22'
-          input-cache: true
+          input-cache: 'true'
           enable-sigstore: true
           attestations: "environment github"
       
