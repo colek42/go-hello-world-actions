@@ -13,40 +13,60 @@ jobs:
 
       # Example 1: Using direct parameters (recommended approach)
       - name: Run GoReleaser with Direct Boolean Parameter
-        uses: testifysec/witness-run-action@v1
+        id: direct-boolean
+        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
         with:
+          step: direct-boolean-test
           action-ref: goreleaser/goreleaser-action@v5
           install-only: true
           distribution: goreleaser
           version: latest
           args: --snapshot --clean
           workdir: examples/go-project
+          enable-archivista: false
+          enable-sigstore: false
 
       # Example 2: Using input- prefixed parameters (not recommended for booleans)
       - name: Run GoReleaser with Input-Prefixed Boolean Parameter
-        uses: testifysec/witness-run-action@v1
+        id: input-prefixed-boolean
+        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
         with:
+          step: input-prefixed-boolean-test
           action-ref: goreleaser/goreleaser-action@v5
           input-install-only: true
           input-distribution: goreleaser
           input-version: latest
           input-args: --snapshot --clean
           input-workdir: examples/go-project
+          enable-archivista: false
+          enable-sigstore: false
 
-      # Example 3: Multiple boolean parameters using direct approach
-      - name: Run with Multiple Boolean Parameters
-        uses: testifysec/witness-run-action@v1
+      # Example 3: Multiple boolean parameters using direct approach with GitHub Script
+      - name: Run GitHub Script with Direct Boolean Parameters
+        id: direct-multiple-booleans
+        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
         with:
-          action-ref: example/action@v1
-          parameter1: true
-          parameter2: false
-          parameter3: "string value"
+          step: direct-multiple-booleans-test
+          action-ref: actions/github-script@v7
+          debug: true
+          result-encoding: string
+          script: |
+            console.log('Testing direct boolean parameters');
+            return 'Success!';
+          enable-archivista: false
+          enable-sigstore: false
           
-      # Example 4: Multiple boolean parameters using input- prefix (not recommended)
-      - name: Run with Multiple Input-Prefixed Boolean Parameters
-        uses: testifysec/witness-run-action@v1
+      # Example 4: Multiple boolean parameters using input- prefix with GitHub Script (not recommended)
+      - name: Run GitHub Script with Input-Prefixed Boolean Parameters
+        id: input-prefixed-multiple-booleans
+        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
         with:
-          action-ref: example/action@v1
-          input-parameter1: true
-          input-parameter2: false
-          input-parameter3: "string value"
+          step: input-prefixed-multiple-booleans-test
+          action-ref: actions/github-script@v7
+          input-debug: true
+          input-result-encoding: string
+          input-script: |
+            console.log('Testing input-prefixed boolean parameters');
+            return 'Success!';
+          enable-archivista: false
+          enable-sigstore: false
