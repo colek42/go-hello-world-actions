@@ -1,0 +1,19 @@
+name: Boolean Parameter Test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Direct Boolean Parameters (Recommended)
+        uses: testifysec/witness-run-action@main
+        with:
+          step: test
+          install-only: true
+          debug: false
+      
+      - name: Input-Prefixed Boolean Parameters
+        uses: testifysec/witness-run-action@main
+        with:
+          step: test
+          input-install-only: true
+          input-debug: false
