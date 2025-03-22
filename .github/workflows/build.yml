@@ -31,8 +31,8 @@ jobs:
         with:
           step: "setup-go"
           action-ref: "actions/setup-go@v5"
-          go-version: '1.22'
-          cache: true
+          input-go-version: '1.22'
+          input-cache: true
           enable-sigstore: true
           attestations: "environment github"
       
@@ -67,7 +67,8 @@ jobs:
         with:
           step: "setup-go-for-build"
           action-ref: "actions/setup-go@v5"
-          go-version: '1.22'
+          input-go-version: '1.22'
+          input-cache: true
           enable-sigstore: true
           attestations: "environment github"
       
@@ -77,8 +78,8 @@ jobs:
         with:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
-          version: latest
-          args: release --snapshot --clean
+          input-version: latest
+          input-args: release --snapshot --clean
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
