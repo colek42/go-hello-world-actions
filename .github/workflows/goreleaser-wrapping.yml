@@ -35,6 +35,7 @@ jobs:
           # Inputs for goreleaser action
           input-version: latest
           input-args: release --snapshot --clean
+          input-install-only: "false"  # String format to avoid YAML parsing issues
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
