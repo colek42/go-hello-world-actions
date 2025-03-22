@@ -26,18 +26,18 @@ jobs:
         with:
           go-version: '1.22'
       
-      # Use witness-run-action with our boolean parameter fix to wrap goreleaser action
+      # Use witness-run-action with our enhanced boolean parameter fix
       - name: GoReleaser with Witness (Boolean Test)
         uses: testifysec/witness-run-action@fix/boolean-input-handling
         with:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
-          # Test boolean parameter handling - updated after fix
+          # Using enhanced boolean handling with TRUE/FALSE uppercase format
           input-version: latest
           input-args: "release --snapshot --clean"
-          input-install-only: "false"  # Using string format for better YAML compatibility
-          enable-sigstore: "true"
-          enable-archivista: "true"
+          input-install-only: "FALSE"  # Using uppercase for YAML schema compliance
+          enable-sigstore: true
+          enable-archivista: true
           attestations: "environment github slsa"
           witness-install-dir: "./"
           archivista-server: "https://archivista.testifysec.io"
