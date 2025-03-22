@@ -22,7 +22,7 @@ jobs:
       
       # Test with setup-go action (debug boolean)
       - name: Test 1 - setup-go with debug=true
-        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "setup-go-debug-true"
           action-ref: "actions/setup-go@v5"
@@ -34,7 +34,7 @@ jobs:
       
       # Test with checkout action (persist-credentials boolean)
       - name: Test 2 - checkout with persist-credentials=false
-        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "checkout-persist-creds-false"
           action-ref: "actions/checkout@v4"
@@ -46,7 +46,7 @@ jobs:
       
       # Test with cache action (restore-keys boolean)
       - name: Test 3 - cache with skip-restore=true
-        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "cache-skip-restore-true"
           action-ref: "actions/cache@v4"

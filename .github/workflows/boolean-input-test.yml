@@ -28,7 +28,7 @@ jobs:
       
       # Use witness-run-action with our enhanced boolean parameter fix
       - name: GoReleaser with Witness (Boolean Test)
-        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"

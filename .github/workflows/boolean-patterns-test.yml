@@ -28,7 +28,7 @@ jobs:
       
       # Test 1: Using uppercase "TRUE" with goreleaser action
       - name: Test 1 - Uppercase TRUE Boolean Format
-        uses: testifysec/witness-run-action@06b32b6d2501a19b7a5723486ec60930f9cb218a
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "goreleaser-true-uppercase"
           action-ref: "goreleaser/goreleaser-action@v5"
@@ -42,7 +42,7 @@ jobs:
 
       # Test 2: Using lowercase "true" with goreleaser action
       - name: Test 2 - Lowercase true Boolean Format
-        uses: testifysec/witness-run-action@06b32b6d2501a19b7a5723486ec60930f9cb218a
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "goreleaser-true-lowercase"
           action-ref: "goreleaser/goreleaser-action@v5"
@@ -56,7 +56,7 @@ jobs:
           
       # Test 3: Using uppercase "FALSE" with goreleaser action
       - name: Test 3 - Uppercase FALSE Boolean Format
-        uses: testifysec/witness-run-action@06b32b6d2501a19b7a5723486ec60930f9cb218a
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "goreleaser-false-uppercase"
           action-ref: "goreleaser/goreleaser-action@v5"
@@ -70,7 +70,7 @@ jobs:
           
       # Test 4: Using lowercase "false" with goreleaser action
       - name: Test 4 - Lowercase false Boolean Format
-        uses: testifysec/witness-run-action@06b32b6d2501a19b7a5723486ec60930f9cb218a
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "goreleaser-false-lowercase"
           action-ref: "goreleaser/goreleaser-action@v5"
@@ -84,7 +84,7 @@ jobs:
           
       # Test 5: Using literal true (unquoted) with goreleaser action
       - name: Test 5 - Literal true Boolean Format
-        uses: testifysec/witness-run-action@06b32b6d2501a19b7a5723486ec60930f9cb218a
+        uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "goreleaser-literal-true"
           action-ref: "goreleaser/goreleaser-action@v5"
