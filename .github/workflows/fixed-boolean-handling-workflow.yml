@@ -1,43 +1,52 @@
-name: Fixed Boolean Handling (Action-Ref)
+name: Fixed Boolean Parameter Handling Example
 
 on:
-  push:
-    branches: [ feature/action-wrapping ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write  # Required for JWT (Sigstore)
-
 jobs:
-  fixed-boolean-action-ref:
-    name: Action-Ref With Fixed Boolean Handling
+  test-boolean-parameters:
     runs-on: ubuntu-latest
+    name: Test Boolean Parameter Handling
     steps:
-      # Regular checkout - needed first
       - name: Checkout
         uses: actions/checkout@v4
+
+      # Example 1: Using direct parameters (recommended approach)
+      - name: Run GoReleaser with Direct Boolean Parameter
+        uses: testifysec/witness-run-action@v1
         with:
-          fetch-depth: 0
-      
-      # Setup Go directly
-      - name: Setup Go
-        uses: actions/setup-go@v5
+          action-ref: goreleaser/goreleaser-action@v5
+          install-only: true
+          distribution: goreleaser
+          version: latest
+          args: --snapshot --clean
+          workdir: examples/go-project
+
+      # Example 2: Using input- prefixed parameters (not recommended for booleans)
+      - name: Run GoReleaser with Input-Prefixed Boolean Parameter
+        uses: testifysec/witness-run-action@v1
         with:
-          go-version: '1.22'
-      
-      # Use witness-run-action with our fixed boolean parameter handling
-      - name: GoReleaser with Witness (Action-Ref)
-        uses: testifysec/witness-run-action@af39f491547641d75205de2c9a2cffb12969b773
-        with:
-          step: "goreleaser"
-          action-ref: "goreleaser/goreleaser-action@v5"
+          action-ref: goreleaser/goreleaser-action@v5
+          input-install-only: true
+          input-distribution: goreleaser
           input-version: latest
-          input-args: "build --snapshot"
-          # Using direct parameter (without input- prefix) bypasses our processing
-          install-only: "true"
-          enable-sigstore: true
-          enable-archivista: true
-          attestations: "environment github slsa"
-          witness-install-dir: "./"
-          archivista-server: "https://archivista.testifysec.io"
+          input-args: --snapshot --clean
+          input-workdir: examples/go-project
+
+      # Example 3: Multiple boolean parameters using direct approach
+      - name: Run with Multiple Boolean Parameters
+        uses: testifysec/witness-run-action@v1
+        with:
+          action-ref: example/action@v1
+          parameter1: true
+          parameter2: false
+          parameter3: "string value"
+          
+      # Example 4: Multiple boolean parameters using input- prefix (not recommended)
+      - name: Run with Multiple Input-Prefixed Boolean Parameters
+        uses: testifysec/witness-run-action@v1
+        with:
+          action-ref: example/action@v1
+          input-parameter1: true
+          input-parameter2: false
+          input-parameter3: "string value"
