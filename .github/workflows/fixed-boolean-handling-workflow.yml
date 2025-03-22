@@ -33,9 +33,9 @@ jobs:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
           input-version: latest
-          input-args: "release --snapshot --clean"
-          # Try with no prefixing to bypass our input handling completely
-          install-only: "false"  # Direct parameter to GoReleaser action
+          input-args: "build --snapshot"
+          # Using direct parameter (without input- prefix) bypasses our processing
+          install-only: "true"
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
