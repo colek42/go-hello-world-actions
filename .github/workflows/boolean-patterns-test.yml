@@ -2,7 +2,7 @@ name: Boolean Patterns Test
 
 on:
   push:
-    branches: [ fix/boolean-input-handling ]
+    branches: [ fix/boolean-input-handling, feature/action-wrapping ]
   workflow_dispatch:
 
 permissions:
