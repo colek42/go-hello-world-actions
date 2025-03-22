@@ -15,26 +15,16 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      # Checkout code with witness-run-action wrapper
-      - name: Checkout with Witness
-        uses: testifysec/witness-run-action@feature/action-wrapping
-        with:
-          step: "checkout"
-          action-ref: "actions/checkout@v4"
-          token: ${{ github.token }}
-          enable-sigstore: true
-          attestations: "environment github slsa"
+      # Regular checkout - needed first
+      - name: Checkout
+        uses: actions/checkout@v4
       
-      # Setup Go with witness-run-action wrapper (Composite action)
-      - name: Setup Go with Witness
-        uses: testifysec/witness-run-action@feature/action-wrapping
+      # Setup Go directly
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          step: "setup-go"
-          action-ref: "actions/setup-go@v5"
-          input-go-version: '1.22'
-          input-cache: 'true'
-          enable-sigstore: true
-          attestations: "environment github"
+          go-version: '1.22'
+          cache: true
       
       # Run Go tests with witness-run-action wrapper (Command-line action)
       - name: Run Tests with Witness
@@ -50,36 +40,24 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      # Checkout code with witness-run-action wrapper
-      - name: Checkout with Witness
-        uses: testifysec/witness-run-action@feature/action-wrapping
+      # Regular checkout
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          step: "checkout-for-build"
-          action-ref: "actions/checkout@v4"
-          token: ${{ github.token }}
           fetch-depth: 0
-          enable-sigstore: true
-          attestations: "environment github slsa"
       
-      # Setup Go with witness-run-action wrapper
-      - name: Setup Go with Witness
-        uses: testifysec/witness-run-action@feature/action-wrapping
+      # Setup Go directly
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          step: "setup-go-for-build"
-          action-ref: "actions/setup-go@v5"
-          input-go-version: '1.22'
-          input-cache: 'true'
-          enable-sigstore: true
-          attestations: "environment github"
+          go-version: '1.22'
       
-      # Run GoReleaser with witness-run-action wrapper (Docker action)
+      # Run GoReleaser with witness-run-action wrapper (Command-line action)
       - name: Run GoReleaser with Witness
         uses: testifysec/witness-run-action@feature/action-wrapping
         with:
           step: "goreleaser"
-          action-ref: "goreleaser/goreleaser-action@v5"
-          input-version: latest
-          input-args: release --snapshot --clean
+          command: "go install github.com/goreleaser/goreleaser@latest && goreleaser release --snapshot --clean"
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
