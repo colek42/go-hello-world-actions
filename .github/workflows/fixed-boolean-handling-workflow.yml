@@ -28,7 +28,7 @@ jobs:
       
       # Use witness-run-action with our fixed boolean parameter handling
       - name: GoReleaser with Witness (Action-Ref)
-        uses: testifysec/witness-run-action@06b32b6d2501a19b7a5723486ec60930f9cb218a
+        uses: testifysec/witness-run-action@af39f491547641d75205de2c9a2cffb12969b773
         with:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
