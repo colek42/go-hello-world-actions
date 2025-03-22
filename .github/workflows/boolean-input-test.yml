@@ -33,9 +33,12 @@ jobs:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
           # Using RECOMMENDED approach - direct parameters for booleans
+          # These parameters will be passed directly to the GoReleaser action
+          # Note: With witness-run-action, we specify them without the input- prefix
+          distribution: goreleaser
           version: latest
-          args: "release --snapshot --clean"
-          install-only: false  # Direct parameter without input- prefix (recommended for booleans)
+          args: "--snapshot --clean"
+          install-only: true  # Direct parameter without input- prefix (recommended for booleans)
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
