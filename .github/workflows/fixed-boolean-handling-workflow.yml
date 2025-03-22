@@ -34,8 +34,8 @@ jobs:
           action-ref: "goreleaser/goreleaser-action@v5"
           input-version: latest
           input-args: "release --snapshot --clean"
-          # Explicit format with lowercase to match YAML 1.2 Core Schema
-          input-install-only: false  # Unquoted literal as defined in YAML to ensure compatibility
+          # Try with no prefixing to bypass our input handling completely
+          install-only: "false"  # Direct parameter to GoReleaser action
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
