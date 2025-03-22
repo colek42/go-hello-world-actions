@@ -21,7 +21,7 @@ jobs:
         with:
           step: "checkout"
           action-ref: "actions/checkout@v4"
-          input-token: ${{ github.token }}
+          token: ${{ github.token }}
           enable-sigstore: true
           attestations: "environment github slsa"
       
@@ -31,8 +31,8 @@ jobs:
         with:
           step: "setup-go"
           action-ref: "actions/setup-go@v5"
-          input-go-version: '1.22'
-          input-cache: true
+          go-version: '1.22'
+          cache: true
           enable-sigstore: true
           attestations: "environment github"
       
@@ -56,8 +56,8 @@ jobs:
         with:
           step: "checkout-for-build"
           action-ref: "actions/checkout@v4"
-          input-token: ${{ github.token }}
-          input-fetch-depth: 0
+          token: ${{ github.token }}
+          fetch-depth: 0
           enable-sigstore: true
           attestations: "environment github slsa"
       
@@ -67,7 +67,7 @@ jobs:
         with:
           step: "setup-go-for-build"
           action-ref: "actions/setup-go@v5"
-          input-go-version: '1.22'
+          go-version: '1.22'
           enable-sigstore: true
           attestations: "environment github"
       
@@ -77,8 +77,8 @@ jobs:
         with:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
-          input-version: latest
-          input-args: release --snapshot --clean
+          version: latest
+          args: release --snapshot --clean
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
