@@ -1,0 +1,65 @@
+name: Build with Action Wrapping
+
+on:
+  push:
+    branches: [ feature/action-wrapping ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write  # Required for JWT (Sigstore)
+
+jobs:
+  build:
+    name: Build and Test with Action Wrapping
+    runs-on: ubuntu-latest
+    steps:
+      # Use action-ref for checkout - JavaScript action example
+      - name: Checkout with Witness
+        uses: testifysec/witness-run-action@feature/action-wrapping
+        with:
+          step: "checkout"
+          action-ref: "actions/checkout@v4"
+          token: ${{ github.token }}
+          enable-sigstore: true
+          attestations: "environment github"
+      
+      # Verify checkout worked
+      - name: Verify Checkout
+        run: ls -la
+      
+      # Use action-ref for setup-go - Composite action example
+      - name: Setup Go with Witness
+        uses: testifysec/witness-run-action@feature/action-wrapping
+        with:
+          step: "setup-go"
+          action-ref: "actions/setup-go@v5"
+          input-go-version: '1.22'
+          input-cache: 'true'
+          enable-sigstore: true
+          attestations: "environment github"
+      
+      # Verify Go setup worked
+      - name: Verify Go Setup
+        run: go version
+      
+      # Run tests with command approach (for reference/comparison)
+      - name: Run Tests with Witness
+        uses: testifysec/witness-run-action@feature/action-wrapping
+        with:
+          step: "run-tests"
+          command: "go test -v ./..."
+          enable-sigstore: true
+          attestations: "environment github"
+      
+      # Use action-ref for goreleaser - Docker action example
+      - name: GoReleaser with Witness
+        uses: testifysec/witness-run-action@feature/action-wrapping
+        with:
+          step: "goreleaser"
+          action-ref: "goreleaser/goreleaser-action@v5"
+          input-version: latest
+          input-args: release --snapshot --clean
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github slsa"
