@@ -52,12 +52,16 @@ jobs:
         with:
           go-version: '1.22'
       
+      # Install GoReleaser
+      - name: Install GoReleaser
+        run: go install github.com/goreleaser/goreleaser@latest
+      
       # Run GoReleaser with witness-run-action wrapper (Command-line action)
       - name: Run GoReleaser with Witness
         uses: testifysec/witness-run-action@feature/action-wrapping
         with:
           step: "goreleaser"
-          command: "go install github.com/goreleaser/goreleaser@latest && goreleaser release --snapshot --clean"
+          command: "goreleaser release --snapshot --clean"
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
