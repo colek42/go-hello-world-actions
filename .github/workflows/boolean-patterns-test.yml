@@ -1,0 +1,97 @@
+name: Boolean Patterns Test
+
+on:
+  push:
+    branches: [ fix/boolean-input-handling ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write  # Required for JWT (Sigstore)
+
+jobs:
+  test-boolean-patterns:
+    name: Test Various Boolean Parameter Patterns
+    runs-on: ubuntu-latest
+    steps:
+      # Regular checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      # Setup Go directly
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      
+      # Test 1: Using uppercase "TRUE" with goreleaser action
+      - name: Test 1 - Uppercase TRUE Boolean Format
+        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        with:
+          step: "goreleaser-true-uppercase"
+          action-ref: "goreleaser/goreleaser-action@v5"
+          input-version: latest
+          input-args: "release --snapshot --clean"
+          input-install-only: "TRUE"  # Using uppercase for YAML schema compliance
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github"
+          witness-install-dir: "./"
+
+      # Test 2: Using lowercase "true" with goreleaser action
+      - name: Test 2 - Lowercase true Boolean Format
+        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        with:
+          step: "goreleaser-true-lowercase"
+          action-ref: "goreleaser/goreleaser-action@v5"
+          input-version: latest
+          input-args: "release --snapshot --clean"
+          input-install-only: "true"  # Using lowercase format
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github"
+          witness-install-dir: "./"
+          
+      # Test 3: Using uppercase "FALSE" with goreleaser action
+      - name: Test 3 - Uppercase FALSE Boolean Format
+        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        with:
+          step: "goreleaser-false-uppercase"
+          action-ref: "goreleaser/goreleaser-action@v5"
+          input-version: latest
+          input-args: "release --snapshot --clean"
+          input-install-only: "FALSE"  # Using uppercase for YAML schema compliance
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github"
+          witness-install-dir: "./"
+          
+      # Test 4: Using lowercase "false" with goreleaser action
+      - name: Test 4 - Lowercase false Boolean Format
+        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        with:
+          step: "goreleaser-false-lowercase"
+          action-ref: "goreleaser/goreleaser-action@v5"
+          input-version: latest
+          input-args: "release --snapshot --clean"
+          input-install-only: "false"  # Using lowercase format
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github"
+          witness-install-dir: "./"
+          
+      # Test 5: Using literal true (unquoted) with goreleaser action
+      - name: Test 5 - Literal true Boolean Format
+        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        with:
+          step: "goreleaser-literal-true"
+          action-ref: "goreleaser/goreleaser-action@v5"
+          input-version: latest
+          input-args: "release --snapshot --clean"
+          input-install-only: true  # Using literal true (YAML boolean)
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github"
+          witness-install-dir: "./"

@@ -1,0 +1,42 @@
+name: Fixed Boolean Handling (Action-Ref)
+
+on:
+  push:
+    branches: [ fix/boolean-input-handling ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write  # Required for JWT (Sigstore)
+
+jobs:
+  fixed-boolean-action-ref:
+    name: Action-Ref With Fixed Boolean Handling
+    runs-on: ubuntu-latest
+    steps:
+      # Regular checkout - needed first
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      # Setup Go directly
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      
+      # Use witness-run-action with our fixed boolean parameter handling
+      - name: GoReleaser with Witness (Action-Ref)
+        uses: testifysec/witness-run-action@fix/boolean-input-handling
+        with:
+          step: "goreleaser"
+          action-ref: "goreleaser/goreleaser-action@v5"
+          input-version: latest
+          input-args: "release --snapshot --clean"
+          input-install-only: "FALSE"  # Using uppercase for YAML schema compliance
+          enable-sigstore: true
+          enable-archivista: true
+          attestations: "environment github slsa"
+          witness-install-dir: "./"
+          archivista-server: "https://archivista.testifysec.io"
