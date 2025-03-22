@@ -27,15 +27,15 @@ jobs:
           go-version: '1.22'
       
       # Use witness-run-action with our enhanced boolean parameter fix
-      - name: GoReleaser with Witness (Boolean Test)
+      - name: GoReleaser with Witness (Boolean Test) - Using Direct Parameters
         uses: testifysec/witness-run-action@b4a0ee61aeec62219b01c8fbda3152eeed105c29
         with:
           step: "goreleaser"
           action-ref: "goreleaser/goreleaser-action@v5"
-          # Using enhanced boolean handling with TRUE/FALSE uppercase format
-          input-version: latest
-          input-args: "release --snapshot --clean"
-          input-install-only: "FALSE"  # Using uppercase for YAML schema compliance
+          # Using RECOMMENDED approach - direct parameters for booleans
+          version: latest
+          args: "release --snapshot --clean"
+          install-only: false  # Direct parameter without input- prefix (recommended for booleans)
           enable-sigstore: true
           enable-archivista: true
           attestations: "environment github slsa"
