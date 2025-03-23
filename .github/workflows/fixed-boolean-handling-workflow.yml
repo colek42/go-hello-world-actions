@@ -28,3 +28,20 @@ jobs:
           workdir: examples/go-project
           enable-archivista: true
           enable-sigstore: true
+  test-full-build:
+    runs-on: ubuntu-latest
+    name: Test Full Build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Example 2: Using a composite action (alternative approach)
+      - name: Run GoReleaser with Composite Action
+        id: composite-action
+        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
+        with:
+          step: full-build-test
+          action-ref: goreleaser/goreleaser-action@v5
+          workdir: examples/go-project
+          enable-archivista: true
+          enable-sigstore: true
