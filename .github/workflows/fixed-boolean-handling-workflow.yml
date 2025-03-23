@@ -44,6 +44,9 @@ jobs:
           step: full-build-test
           action-ref: goreleaser/goreleaser-action@v5
           install-only: false
-          args: "--rm-dist"
+
           enable-archivista: true
           enable-sigstore: true
+
+          version: '~> v2'
+          args: release --clean
