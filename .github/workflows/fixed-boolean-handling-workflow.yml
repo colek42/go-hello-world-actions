@@ -45,6 +45,5 @@ jobs:
           action-ref: goreleaser/goreleaser-action@v5
           install-only: false
           args: "--rm-dist"
-          workdir: examples/go-project
           enable-archivista: true
           enable-sigstore: true
