@@ -2,8 +2,9 @@ name: Fixed Boolean Parameter Handling Example
 
 on:
   push:
-    branches:
-      - '*'
+    branches: [ main, feature/action-wrapping ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test-boolean-parameters:
