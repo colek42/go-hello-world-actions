@@ -44,6 +44,7 @@ jobs:
           step: full-build-test
           action-ref: goreleaser/goreleaser-action@v5
           install-only: false
+          args: ""
           workdir: examples/go-project
           enable-archivista: true
           enable-sigstore: true
