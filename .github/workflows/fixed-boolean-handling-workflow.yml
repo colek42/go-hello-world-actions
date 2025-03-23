@@ -22,9 +22,6 @@ jobs:
           step: direct-boolean-test
           action-ref: goreleaser/goreleaser-action@v5
           install-only: true
-          distribution: goreleaser
-          version: latest
-          args: --snapshot --clean
           workdir: examples/go-project
           enable-archivista: true
           enable-sigstore: true
