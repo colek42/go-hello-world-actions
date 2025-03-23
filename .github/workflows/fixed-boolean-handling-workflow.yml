@@ -47,6 +47,4 @@ jobs:
 
           enable-archivista: true
           enable-sigstore: true
-
-          version: '~> v2'
           args: release --clean
