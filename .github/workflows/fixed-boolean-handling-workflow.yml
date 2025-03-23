@@ -48,3 +48,5 @@ jobs:
           enable-archivista: true
           enable-sigstore: true
           args: release --clean
+        env:
+          GITHUB_TOKEN: $GITHUB_TOKEN
