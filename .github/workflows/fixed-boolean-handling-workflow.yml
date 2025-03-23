@@ -1,7 +1,9 @@
 name: Fixed Boolean Parameter Handling Example
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - '*'
 
 jobs:
   test-boolean-parameters:
