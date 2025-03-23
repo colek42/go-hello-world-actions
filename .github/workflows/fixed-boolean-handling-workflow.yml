@@ -28,6 +28,7 @@ jobs:
           workdir: examples/go-project
           enable-archivista: true
           enable-sigstore: true
+
   test-full-build:
     runs-on: ubuntu-latest
     name: Test Full Build
@@ -42,6 +43,7 @@ jobs:
         with:
           step: full-build-test
           action-ref: goreleaser/goreleaser-action@v5
+          install-only: false
           workdir: examples/go-project
           enable-archivista: true
           enable-sigstore: true
