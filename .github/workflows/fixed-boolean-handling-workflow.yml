@@ -23,50 +23,5 @@ jobs:
           version: latest
           args: --snapshot --clean
           workdir: examples/go-project
-          enable-archivista: false
-          enable-sigstore: false
-
-      # Example 2: Using input- prefixed parameters (not recommended for booleans)
-      - name: Run GoReleaser with Input-Prefixed Boolean Parameter
-        id: input-prefixed-boolean
-        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
-        with:
-          step: input-prefixed-boolean-test
-          action-ref: goreleaser/goreleaser-action@v5
-          input-install-only: true
-          input-distribution: goreleaser
-          input-version: latest
-          input-args: --snapshot --clean
-          input-workdir: examples/go-project
-          enable-archivista: false
-          enable-sigstore: false
-
-      # Example 3: Multiple boolean parameters using direct approach with GitHub Script
-      - name: Run GitHub Script with Direct Boolean Parameters
-        id: direct-multiple-booleans
-        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
-        with:
-          step: direct-multiple-booleans-test
-          action-ref: actions/github-script@v7
-          debug: true
-          result-encoding: string
-          script: |
-            console.log('Testing direct boolean parameters');
-            return 'Success!';
-          enable-archivista: false
-          enable-sigstore: false
-          
-      # Example 4: Multiple boolean parameters using input- prefix with GitHub Script (not recommended)
-      - name: Run GitHub Script with Input-Prefixed Boolean Parameters
-        id: input-prefixed-multiple-booleans
-        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
-        with:
-          step: input-prefixed-multiple-booleans-test
-          action-ref: actions/github-script@v7
-          input-debug: true
-          input-result-encoding: string
-          input-script: |
-            console.log('Testing input-prefixed boolean parameters');
-            return 'Success!';
-          enable-archivista: false
-          enable-sigstore: false
+          enable-archivista: true
+          enable-sigstore: true
