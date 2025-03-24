@@ -54,6 +54,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure we have the full history for versioning
 
       # Example 2: Using a composite action (alternative approach)
       - name: Run GoReleaser with Composite Action
