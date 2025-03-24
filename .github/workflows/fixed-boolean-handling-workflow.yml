@@ -24,7 +24,7 @@ jobs:
         uses: testifysec/witness-run-action@8c71311009ce6ffa358e2cf4b38e900fa78bc853
         with:
           step: custom-test
-          action-ref: olek42/test-action@main
+          action-ref: colek42/test-action@main
           string-input: 'Hello from GitHub Workflow'
           number-input: 99
           boolean-input: false
