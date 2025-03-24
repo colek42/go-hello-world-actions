@@ -22,7 +22,7 @@ jobs:
       # Example 1: Using direct parameters (recommended approach)
       - name: Run GoReleaser with Direct Boolean Parameter
         id: direct-boolean
-        uses: testifysec/witness-run-action@a8241420d453b7dc234a266d5f67fb4d02b41d27
+        uses: testifysec/witness-run-action@8c71311009ce6ffa358e2cf4b38e900fa78bc853
         with:
           step: direct-boolean-test
           action-ref: goreleaser/goreleaser-action@v5
