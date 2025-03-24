@@ -17,6 +17,12 @@ process.env.INPUT_STEP = 'test-boolean-handling';
 process.env.INPUT_INSTALL_ONLY = 'true';  // Direct boolean parameter (unquoted in YAML)
 process.env['INPUT_INPUT-DEBUG'] = 'false';  // Note the HYPHEN, not underscore
 
+// Add additional boolean formats to test YAML 1.2 compliance
+process.env.INPUT_BOOL_TRUE_UPPER = 'TRUE';    // Uppercase TRUE
+process.env.INPUT_BOOL_FALSE_UPPER = 'FALSE';  // Uppercase FALSE
+process.env.INPUT_BOOL_TRUE_TITLE = 'True';    // Title case True
+process.env.INPUT_BOOL_FALSE_TITLE = 'False';  // Title case False
+
 // Output initial environment
 console.log('======== INITIAL ENVIRONMENT ========');
 Object.keys(process.env).filter(k => k.startsWith('INPUT_')).forEach(key => {
@@ -25,36 +31,36 @@ Object.keys(process.env).filter(k => k.startsWith('INPUT_')).forEach(key => {
 console.log('====================================');
 
 /**
- * This function directly matches the implementation in WitnessActionRunner.js
+ * This function directly matches the updated implementation in WitnessActionRunner.js
  * and allows us to test the boolean handling logic
  */
 function getWrappedActionEnv() {
   // Start with a copy of the current environment
   const newEnv = { ...process.env };
-  const passedInputs = new Set();
+  const passedInputs = [];
   
-  // Process inputs, with special handling for input- prefixed inputs
-  const allInputs = [];
+  // Process input- prefixed variables first
+  // This is crucial for correct boolean parameter handling
   for (const key in process.env) {
     if (key.startsWith('INPUT_')) {
       console.log(`Processing key: ${key}...`);
       
-      // Get the original input name and value
-      let inputName = key.substring(6).toLowerCase();
+      const inputName = key.substring(6).toLowerCase();
       console.log(`  inputName (lowercase): ${inputName}`);
-      let inputValue = process.env[key];
+      const inputValue = process.env[key];
+      
+      // Skip witness parameters (not implemented in this test)
       
       // Handle input- prefixed inputs by stripping the prefix
       // NOTE: GitHub Actions converts "input-debug" in YAML to "INPUT_INPUT-DEBUG" in env
-      // so we need to check for "input-" in the lowercase name
       if (inputName.startsWith('input-')) {
         const originalName = inputName;
-        inputName = inputName.substring(6); // Remove 'input-' prefix
-        console.log(`  Detected input- prefix! New inputName: ${inputName}`);
+        const strippedName = inputName.substring(6); // Remove 'input-' prefix
+        console.log(`  Detected input- prefix! New inputName: ${strippedName}`);
         
         // Create a new environment variable with the correct name
         // Convert hyphens to underscores in the environment variable name
-        const newKey = `INPUT_${inputName.toUpperCase().replace(/-/g, '_')}`;
+        const newKey = `INPUT_${strippedName.toUpperCase().replace(/-/g, '_')}`;
         console.log(`  New environment key: ${newKey}`);
         
         // IMPORTANT: Preserve the original value exactly as-is
@@ -65,20 +71,28 @@ function getWrappedActionEnv() {
         newEnv[newKey] = inputValue;
         delete newEnv[key];
         
-        console.log(`  ✓ Mapped input-prefixed parameter: ${originalName} -> ${inputName} (env: ${key} -> ${newKey})`);
+        console.log(`  ✓ Mapped input-prefixed parameter: ${originalName} -> ${strippedName} (env: ${key} -> ${newKey})`);
+        
+        // Track this as a passed input if not already in the list
+        if (!passedInputs.includes(strippedName)) {
+          passedInputs.push(strippedName);
+        }
       } else {
         console.log(`  ✓ Direct parameter, no transformation needed`);
-      }
-      // Do not modify non-prefixed inputs at all - they're already in the correct format
-      
-      if (!passedInputs.has(inputName)) {
-        allInputs.push(`${inputName}=${inputValue}`);
-        passedInputs.add(inputName);
+        
+        // Add to passed inputs if not already included
+        const simpleName = inputName;
+        if (!passedInputs.includes(simpleName)) {
+          passedInputs.push(simpleName);
+        }
       }
     }
   }
   
-  console.log(`Passing direct input to wrapped action: ${allInputs.length} inputs`);
+  // Logging would normally happen here for action.yml defaults
+  // (not implemented in this test)
+  
+  console.log(`Passing direct input to wrapped action: ${passedInputs.length} inputs`);
   
   return newEnv;
 }
@@ -115,11 +129,33 @@ if ('INPUT_INPUT-DEBUG' in transformedEnv) {
   success = false;
 }
 
+// Check that alternative boolean formats are preserved
+if (transformedEnv.INPUT_BOOL_TRUE_UPPER !== 'TRUE') {
+  console.log('❌ Uppercase TRUE not preserved. Expected "TRUE", got:', transformedEnv.INPUT_BOOL_TRUE_UPPER);
+  success = false;
+}
+
+if (transformedEnv.INPUT_BOOL_FALSE_UPPER !== 'FALSE') {
+  console.log('❌ Uppercase FALSE not preserved. Expected "FALSE", got:', transformedEnv.INPUT_BOOL_FALSE_UPPER);
+  success = false;
+}
+
+if (transformedEnv.INPUT_BOOL_TRUE_TITLE !== 'True') {
+  console.log('❌ Title case True not preserved. Expected "True", got:', transformedEnv.INPUT_BOOL_TRUE_TITLE);
+  success = false;
+}
+
+if (transformedEnv.INPUT_BOOL_FALSE_TITLE !== 'False') {
+  console.log('❌ Title case False not preserved. Expected "False", got:', transformedEnv.INPUT_BOOL_FALSE_TITLE);
+  success = false;
+}
+
 if (success) {
   console.log('\n✅ SUCCESS: Boolean parameter handling works as expected!');
   console.log('- Direct parameters are preserved correctly');
   console.log('- Input-prefixed parameters are transformed correctly');
-  console.log('- Original format of boolean values is maintained');
+  console.log('- All YAML 1.2 boolean formats are maintained');
+  console.log('- No unexpected value normalization occurs');
 } else {
   console.log('\n❌ FAILURE: Boolean parameter handling does not work as expected.');
 }
