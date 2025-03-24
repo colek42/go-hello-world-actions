@@ -48,6 +48,6 @@ jobs:
           install-only: false
           enable-archivista: true
           enable-sigstore: true
-          args: release --snapshot --clean  # Added --snapshot to avoid requiring tag
+          args: build --snapshot --clean --verbose  # Added --snapshot to avoid requiring tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
