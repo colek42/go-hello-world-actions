@@ -17,7 +17,7 @@ jobs:
       # Example 1: Using direct parameters (recommended approach)
       - name: Run GoReleaser with Direct Boolean Parameter
         id: direct-boolean
-        uses: testifysec/witness-run-action@f5f810d59fcc8902b5216c609e294f469afacd8a
+        uses: testifysec/witness-run-action@2977a7d1dae56ca1f9ca9ad363a20d3209598792
         with:
           step: direct-boolean-test
           action-ref: goreleaser/goreleaser-action@v5
@@ -38,7 +38,7 @@ jobs:
 
       - name: Run action with custom values
         id: test-custom
-        uses: testifysec/witness-run-action@f5f810d59fcc8902b5216c609e294f469afacd8a
+        uses: testifysec/witness-run-action@2977a7d1dae56ca1f9ca9ad363a20d3209598792
         with:
           step: custom-test
           action-ref: colek42/test_action@main
@@ -55,7 +55,7 @@ jobs:
       # Example 2: Using a composite action (alternative approach)
       - name: Run GoReleaser
         id: composite-action
-        uses: testifysec/witness-run-action@f5f810d59fcc8902b5216c609e294f469afacd8a
+        uses: testifysec/witness-run-action@2977a7d1dae56ca1f9ca9ad363a20d3209598792
         with:
           step: full-build-test
           action-ref: goreleaser/goreleaser-action@v5
