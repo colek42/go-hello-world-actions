@@ -14,6 +14,24 @@ jobs:
     runs-on: ubuntu-latest
     name: Test Boolean Parameter Handling
     steps:
+      # Example 1: Using direct parameters (recommended approach)
+      - name: Run GoReleaser with Direct Boolean Parameter
+        id: direct-boolean
+        uses: testifysec/witness-run-action@8c71311009ce6ffa358e2cf4b38e900fa78bc853
+        with:
+          step: direct-boolean-test
+          action-ref: goreleaser/goreleaser-action@v5
+          install-only: true
+          workdir: examples/go-project
+          enable-archivista: true
+          enable-sigstore: true
+
+  test-full-build:
+    runs-on: ubuntu-latest
+    name: Test Full Build
+    steps:
+
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -36,29 +54,8 @@ jobs:
 
 
 
-      # Example 1: Using direct parameters (recommended approach)
-      - name: Run GoReleaser with Direct Boolean Parameter
-        id: direct-boolean
-        uses: testifysec/witness-run-action@8c71311009ce6ffa358e2cf4b38e900fa78bc853
-        with:
-          step: direct-boolean-test
-          action-ref: goreleaser/goreleaser-action@v5
-          install-only: true
-          workdir: examples/go-project
-          enable-archivista: true
-          enable-sigstore: true
-
-  test-full-build:
-    runs-on: ubuntu-latest
-    name: Test Full Build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Ensure we have the full history for versioning
-
       # Example 2: Using a composite action (alternative approach)
-      - name: Run GoReleaser with Composite Action
+      - name: Run GoReleaser
         id: composite-action
         uses: testifysec/witness-run-action@8c71311009ce6ffa358e2cf4b38e900fa78bc853
         with:
