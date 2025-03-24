@@ -19,6 +19,23 @@ jobs:
         with:
           fetch-depth: 0  # Ensure we have the full history for versioning
 
+      - name: Run action with custom values
+        id: test-custom
+        uses: testifysec/witness-run-action@8c71311009ce6ffa358e2cf4b38e900fa78bc853
+        with:
+          step: custom-test
+          action-ref: olek42/test-action@main
+          string-input: 'Hello from GitHub Workflow'
+          number-input: 99
+          boolean-input: false
+          array-input: 'workflow,test,github,action'
+          object-input: '{"name":"Test Workflow","enabled":true,"count":42}'
+          output-file-path: 'custom-debug.json'
+          enable-archivista: true
+          enable-sigstore: true
+
+
+
       # Example 1: Using direct parameters (recommended approach)
       - name: Run GoReleaser with Direct Boolean Parameter
         id: direct-boolean
