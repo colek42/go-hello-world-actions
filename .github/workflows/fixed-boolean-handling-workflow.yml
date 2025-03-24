@@ -17,12 +17,11 @@ jobs:
       # Example 1: Using direct parameters (recommended approach)
       - name: Run GoReleaser with Direct Boolean Parameter
         id: direct-boolean
-        uses: testifysec/witness-run-action@dc9ed34167930ab7d7b886be332eecfb049e9282
+        uses: testifysec/witness-run-action@f5f810d59fcc8902b5216c609e294f469afacd8a
         with:
           step: direct-boolean-test
           action-ref: goreleaser/goreleaser-action@v5
           install-only: true
-          workdir: examples/go-project
           enable-archivista: true
           enable-sigstore: true
 
@@ -39,7 +38,7 @@ jobs:
 
       - name: Run action with custom values
         id: test-custom
-        uses: testifysec/witness-run-action@dc9ed34167930ab7d7b886be332eecfb049e9282
+        uses: testifysec/witness-run-action@f5f810d59fcc8902b5216c609e294f469afacd8a
         with:
           step: custom-test
           action-ref: colek42/test_action@main
@@ -53,15 +52,13 @@ jobs:
           enable-sigstore: true
 
 
-
       # Example 2: Using a composite action (alternative approach)
       - name: Run GoReleaser
         id: composite-action
-        uses: testifysec/witness-run-action@dc9ed34167930ab7d7b886be332eecfb049e9282
+        uses: testifysec/witness-run-action@df5f810d59fcc8902b5216c609e294f469afacd8a
         with:
           step: full-build-test
           action-ref: goreleaser/goreleaser-action@v5
-          install-only: false
           enable-archivista: true
           enable-sigstore: true
           args: build --snapshot --clean --verbose  # Added --snapshot to avoid requiring tag
