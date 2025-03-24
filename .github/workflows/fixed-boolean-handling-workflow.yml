@@ -41,7 +41,7 @@ jobs:
       # Example 2: Using a composite action (alternative approach)
       - name: Run GoReleaser with Composite Action
         id: composite-action
-        uses: testifysec/witness-run-action@b30b11e
+        uses: testifysec/witness-run-action@8c71311009ce6ffa358e2cf4b38e900fa78bc853
         with:
           step: full-build-test
           action-ref: goreleaser/goreleaser-action@v5
