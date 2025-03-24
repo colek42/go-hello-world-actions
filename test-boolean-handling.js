@@ -59,8 +59,8 @@ function getWrappedActionEnv() {
         console.log(`  Detected input- prefix! New inputName: ${strippedName}`);
         
         // Create a new environment variable with the correct name
-        // Convert hyphens to underscores in the environment variable name
-        const newKey = `INPUT_${strippedName.toUpperCase().replace(/-/g, '_')}`;
+        // GitHub Actions preserves hyphens in environment variable names
+        const newKey = `INPUT_${strippedName.toUpperCase()}`;
         console.log(`  New environment key: ${newKey}`);
         
         // IMPORTANT: Preserve the original value exactly as-is
