@@ -1,0 +1,66 @@
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkoutname: Fixed Boolean Parameter Handling Example
+
+
+on:
+  push:
+    branches: [ main, feature/action-wrapping ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-boolean-parameters:
+    runs-on: ubuntu-latest
+    name: Test Boolean Parameter Handling
+    steps:
+      # Example 1: Using direct parameters (recommended approach)
+      - name: Run GoReleaser with Direct Boolean Parameter
+        id: direct-boolean
+        uses: testifysec/witness-run-action@6c70ff63aad9166677a43c67c3a5ab7cb5a2bd24
+        with:
+          step: direct-boolean-test
+          action-ref: goreleaser/goreleaser-action@v5
+          install-only: true
+          enable-archivista: true
+          enable-sigstore: true
+
+  test-full-build:
+    runs-on: ubuntu-latest
+    name: Test Full Build
+    steps:
+
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure we have the full history for versioning
+
+      - name: Run action with custom values
+        id: test-custom
+        uses: testifysec/witness-run-action@6c70ff63aad9166677a43c67c3a5ab7cb5a2bd24
+        with:
+          step: custom-test
+          action-ref: colek42/test_action@main
+          string-input: 'Hello from GitHub Workflow'
+          number-input: 99
+          boolean-input: false
+          array-input: 'workflow,test,github,action'
+          object-input: '{"name":"Test Workflow","enabled":true,"count":42}'
+          output-file-path: 'custom-debug.json'
+          enable-archivista: true
+          enable-sigstore: true
+
+
+      # Example 2: Using a composite action (alternative approach)
+      - name: Run GoReleaser
+        id: composite-action
+        uses: testifysec/witness-run-action@6c70ff63aad9166677a43c67c3a5ab7cb5a2bd24
+        with:
+          step: full-build-test
+          action-ref: goreleaser/goreleaser-action@v5
+          enable-archivista: true
+          enable-sigstore: true
+          args: build --snapshot --clean --verbose  # Added --snapshot to avoid requiring tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
